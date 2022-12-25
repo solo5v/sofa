@@ -1,0 +1,125 @@
+@import "../../node_modules/open-color/open-color.scss";
+
+/* COLOR */
+
+$clr-main: #087f5b;
+$clr-main-100: #e6f2ef;
+$clr-main-200: #b5d9ce;
+$clr-main-300: #9cccbd;
+$clr-main-400: #84bfad;
+$clr-main-500: #52a58c;
+$clr-main-600: #077252;
+$clr-main-700: #065940;
+$clr-main-800: #04402e;
+$clr-main-900: #02261b;
+//_______________
+// GRAY
+$clr-gray-100: #f8f9fa;
+$clr-gray-200: #e9ecef;
+$clr-gray-300: #dee2e6;
+$clr-gray-400: #ced4da;
+$clr-gray-500: #adb5bd;
+$clr-gray-600: #6c757d;
+$clr-gray-700: #495057;
+$clr-gray-800: #343a40;
+$clr-gray-900: #212529;
+
+//_______________
+// orange
+
+$clr-orange-100: $oc-orange-0;
+$clr-orange-200: $oc-orange-1;
+$clr-orange-300: $oc-orange-2;
+$clr-orange-400: $oc-orange-3;
+$clr-orange-500: $oc-orange-4;
+//_______________
+// yellow
+
+$clr-yellow-100: $oc-yellow-0;
+$clr-yellow-200: $oc-yellow-1;
+$clr-yellow-300: $oc-yellow-2;
+$clr-yellow-400: $oc-yellow-3;
+$clr-yellow-500: $oc-yellow-4;
+//_______________
+// green
+
+$clr-green-100: $oc-green-0;
+$clr-green-200: $oc-green-1;
+$clr-green-300: $oc-green-2;
+//_______________
+// teal
+
+$clr-teal-100: $oc-teal-0;
+$clr-teal-200: $oc-teal-1;
+$clr-teal-300: $oc-teal-2;
+//_______________
+// lime
+
+$clr-lime-100: $oc-lime-0;
+$clr-lime-200: $oc-lime-1;
+$clr-lime-300: $oc-lime-2;
+
+/* FONT-SIZE */
+$fz-nr-semi--sm: 1.2rem;
+$fz-nr-sm: 1.4rem;
+$fz-nr-md: 1.6rem;
+$fz-nr-lg: 1.8rem;
+
+/*---------------*/
+$fz-hd-p--sm: 2.2rem;
+$fz-hd-p--md: 2.4rem;
+$fz-hd-p--lg: 2.8rem;
+
+$fz-HD-sm: 3.6rem;
+$fz-HD-md: 4.4rem;
+$fz-HD-lg: 5.2rem;
+/*---------------*/
+
+$fw-nr: 400;
+$fw-semi--bold: 500;
+$fw-bold: 600;
+$fw-xl--bold: 700;
+
+/* GAP */
+// 2 | 4  | 8  | 12 | 16 | 24 |
+// 32| 48 | 64 | 80 | 96 | 128 |
+$gap-semi--sm: 1.2rem;
+$gap-sm: 1.6rem;
+$gap-nr: 2.4rem;
+$gap-md: 3.2rem;
+$gap-lg: 4.8rem;
+$gap-xl: 6.4rem;
+
+/* BORDERS-Raduis */
+$rounded-semi--sm: 4px;
+$rounded-sm: 8px;
+$rounded-md: 15px;
+$rounded-lg: 25px;
+$rounded-full: 9999px;
+
+/* TRANSITION */
+$trn-sm: all 0.3s;
+$trn-md: all 0.5s;
+$trn-lg: all 0.7s;
+
+/* BLUR */
+$blur-sm: 5px;
+$blur-md: 10px;
+$blur-lg: 15px;
+$blur-xl: 50px;
+
+/* SHADOWS */
+
+$accord-shadow: -1.5rem -1.5rem 1.5rem #ffffff80, 1.5rem 1.5rem 1.5rem #0000000d;
+/*GRADIENT*/
+
+$hero-txt-gradient: linear-gradient(130deg, $clr-main-100, $clr-main-500);
+$main-btn--gradient: linear-gradient(130deg, $clr-main-500, $clr-main-600);
+
+// =================
+
+/* BREAK-POINTS*/
+
+$desktop-breakpoint: 64em;
+$tablet-lg--breakpoint: 53.75em;
+$mobile-breakpoint: 26.75em;

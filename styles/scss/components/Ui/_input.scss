@@ -1,0 +1,119 @@
+@use "../../helpers/var" as *;
+@use "../../helpers/placeholders";
+
+%main__input {
+  width: 90%;
+  height: 35px;
+
+  outline: none;
+  border: none;
+  border-radius: $rounded-full;
+
+  font-size: $fz-nr-md;
+  color: $clr-gray-100;
+
+  background: inherit;
+  backdrop-filter: blur($blur-md);
+
+  transition: $trn-md;
+
+  &::placeholder {
+    color: $clr-gray-200;
+    font-size: $fz-nr-sm;
+    font-weight: $fw-bold;
+    letter-spacing: 1.4px;
+
+    text-transform: capitalize;
+  }
+}
+
+// HEADER-INPUT
+.hd--search__engine {
+  position: absolute;
+  transform: scale(0.9);
+  left: -45%;
+  top: 4px;
+
+  form {
+    @extend %fx_cnt_rows;
+    position: relative;
+
+    input {
+      @extend %main__input;
+
+      width: 0px;
+      position: absolute;
+
+      padding: 0 1.2rem {
+        right: 4.4rem;
+      }
+
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate(-45%, -1.5px);
+    }
+
+    span {
+      width: 100%;
+      height: 10%;
+      z-index: 1;
+
+      cursor: pointer;
+      position: relative;
+
+      background: inherit;
+
+      &::before {
+        content: "";
+
+        width: 2px;
+        height: 90%;
+        position: absolute;
+
+        top: 0;
+        left: -7px;
+
+        background: inherit;
+        border-radius: $rounded-full;
+      }
+    }
+  }
+}
+
+// if status chagne
+.hd--search__engine.active {
+  z-index: 10;
+
+  input {
+    visibility: visible;
+    pointer-events: auto;
+
+    background-color: #ffffff27;
+
+    // width: 30vw;
+
+    width: 38rem;
+  }
+
+  span {
+    &::before {
+      background-color: $clr-gray-500;
+    }
+  }
+}
+
+//-----------
+
+%modal__inputs {
+  @extend %main__input;
+  background-color: #dcdcdc;
+  height: 30px;
+  padding: 0 1rem;
+
+  color: #555;
+
+  margin-bottom: 2rem;
+  &::placeholder {
+    color: #333;
+  }
+}

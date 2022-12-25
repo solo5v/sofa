@@ -1,0 +1,13 @@
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: inherit;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #adb5bdc2;
+  border-radius: 9999px;
+
+  &:hover {
+    background-color: #adb5bda3;
+  }
+}

@@ -1,0 +1,53 @@
+@use "../helpers/var" as *;
+@use "../helpers/placeholders";
+@use "../components/Ui/accord";
+.faq__section {
+  background-color: $clr-main;
+
+  margin: 4.8rem 0;
+
+  .container {
+    @extend %grid_cols_2;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+  .accordion {
+    @extend %fx_cnt_cols;
+
+    padding-top: 3.4rem;
+    align-items: flex-start;
+  }
+
+  .accordion__img img {
+    width: 100%;
+  }
+
+  .faq__keyword {
+    position: relative;
+
+    padding-bottom: 3px;
+    margin-bottom: 4.8rem;
+
+    color: #666666;
+    text-transform: uppercase;
+
+    &::after {
+      content: "";
+      width: 35px;
+      height: 5px;
+
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      background-color: $clr-main;
+      border-radius: $rounded-full;
+    }
+  }
+}
+
+// --- SPACING SYSTEM (px)
+//   2 | 4  | 8  | 12 | 16 | 24 |
+//   32| 48 | 64 | 80 | 96 | 128 |

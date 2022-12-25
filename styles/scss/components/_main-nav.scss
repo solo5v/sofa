@@ -1,0 +1,197 @@
+@use "../helpers/var" as *;
+@use "../helpers/placeholders";
+
+// INITIAL STYLES
+.hd--main__nav {
+  transform: translateX(50%);
+  transition: $trn-md ease-in-out;
+
+  ul {
+    @extend %fx_cnt_rows;
+    z-index: inherit;
+
+    gap: $gap-lg;
+  }
+
+  .current-section__keyword {
+    @extend %kill_element_ui;
+    position: absolute;
+
+    display: block;
+    transform: scale(0);
+    top: 29%;
+    left: 11%;
+    color: $clr-gray-500;
+
+    transition: $trn-md 0.6s;
+
+    &.active {
+      @extend %re_evaluate_element_ui;
+      transform: scale(0);
+    }
+  }
+
+  // when search bar is open
+
+  &.cnt {
+    transform: translate(0);
+  }
+
+  &.active {
+    @extend %kill_element_ui;
+    transform: translateX(-450px);
+  }
+
+  .nav--root__list {
+    a:link {
+      position: relative;
+      font-size: $fz-nr-md;
+
+      &::after {
+        content: "";
+        width: 100%;
+        height: 0px;
+        position: absolute;
+        left: 0;
+        bottom: 0px;
+        z-index: -1;
+
+        background-color: $clr-main;
+        transition: $trn-sm ease-in-out;
+      }
+
+      &:hover::after {
+        height: 10px;
+      }
+    }
+  }
+
+  .nav--helper__list {
+    display: none;
+  }
+}
+//============================
+
+// WHEN USER CLICK TO MENU
+.header.open__nav {
+  .hd--main__nav {
+    @extend %re_evaluate_element_ui;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: $tablet-lg--breakpoint) {
+  .hd--main__nav {
+    width: 100%;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    opacity: 0;
+
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(100%);
+
+    backdrop-filter: blur(50px);
+    background: linear-gradient(130deg, #1cc18a8a, #014a329c);
+
+    // LIST OF NAV-ROOT-STYLES -> SM-SCREEN
+    .nav--root__list {
+      height: 100%;
+
+      top: 0;
+      left: 15%;
+      position: absolute;
+
+      flex-direction: column;
+      align-items: flex-start;
+
+      transition: $trn-md;
+
+      // HOVER LINK EFFECT
+      a:link,
+      a:visited {
+        display: flex;
+        align-items: center;
+
+        &::before {
+          content: "";
+
+          width: 0px;
+          height: 5px;
+          margin-right: 8px;
+
+          background-color: $clr-main-200;
+
+          border-radius: $rounded-full;
+          transition: $trn-sm ease-in-out;
+        }
+
+        &:hover::before {
+          transition-delay: 0.1s;
+
+          width: 50px;
+        }
+      }
+
+      li {
+        opacity: 0;
+        transition: $trn-md;
+      }
+
+      li:nth-child(1) {
+        transform: translateX(10vw);
+      }
+      li:nth-child(2) {
+        transform: translateX(25vw);
+      }
+      li:nth-child(3) {
+        transform: translateX(40vw);
+      }
+      li:nth-child(4) {
+        transform: translateX(60vw);
+      }
+
+      &.animate {
+        // transform: translate(0) scale(1);
+
+        li {
+          transition-delay: 1.2s;
+          opacity: 1;
+          transform: translate(0);
+        }
+
+        // REPLACE THE POSITION OF THIRD CHILD
+        li:nth-child(3) {
+          // background-color: red;
+          position: absolute;
+
+          transform: translateY(12.8rem);
+        }
+      }
+    }
+
+    .current-section__keyword {
+      &.animate {
+        transform: scale(1);
+      }
+    }
+
+    .nav--helper__list {
+      display: flex;
+      position: absolute;
+
+      bottom: 12%;
+      left: 17%;
+
+      a:link,
+      a:visited {
+        color: $clr-gray-500;
+        font-size: $fz-nr-semi--sm;
+      }
+    }
+  }
+}
