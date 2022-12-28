@@ -41,8 +41,7 @@
 .home--cart__side {
   @extend %kill_element_ui;
   position: fixed;
-  background-color: #00ffd4;
-  // background: linear-gradient(140deg, #00e699, #076a4c);
+  background: linear-gradient(140deg, #00e699, #076a4c);
   height: 98vh;
   width: 30vw;
 

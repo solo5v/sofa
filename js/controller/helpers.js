@@ -98,14 +98,6 @@ const MANAGE_CLASS_LIST = {
       : CLASS_LIST_METHODS(falsyMethod, falsyClass, ...elements);
   },
 
-  // multiElement diffrent classes and ELEMENT
-  // (classMehtod, [className, element], ...[className, element])
-  moreThanDiffEL(method, ...temp) {
-    return temp.forEach(([className, ...el]) => {
-      return CLASS_LIST_METHODS(method, className, ...el);
-    });
-  },
-
   moreThanOneAddOrRemove(condition, ...temp) {
     return temp.forEach(([classes, ...els]) => {
       return condition
@@ -114,10 +106,48 @@ const MANAGE_CLASS_LIST = {
     });
   },
 
+  // multiElement diffrent classes and ELEMENT
+  // (classMehtod, [className, element], ...[className, element])
+  moreThanDiffEL(method, ...temp) {
+    return temp.forEach(([className, ...el]) => {
+      return CLASS_LIST_METHODS(method, className, ...el);
+    });
+  },
+
   // oneMultiEL
   // one class for mulit el
   oneForMulti(method, className, ...elements) {
     return CLASS_LIST_METHODS(method, className, ...elements);
+  },
+
+  diffrMethodAndClass(el, ...temp) {
+    temp.forEach(([method, classes]) => {
+      return CLASS_LIST_METHODS(method, classes, el);
+    });
+  },
+
+  allDiffr(...temp) {
+    temp.forEach(([method, className, el]) =>
+      CLASS_LIST_METHODS(method, className, el)
+    );
+  },
+
+  toggle(...temp) {
+    temp.forEach(([classes, ...el]) =>
+      CLASS_LIST_METHODS("toggle", classes, ...el)
+    );
+  },
+
+  add(...temp) {
+    return temp.forEach(([classes, ...el]) =>
+      CLASS_LIST_METHODS("add", classes, ...el)
+    );
+  },
+
+  remove(...temp) {
+    return temp.forEach(([classes, ...el]) =>
+      CLASS_LIST_METHODS("remove", classes, ...el)
+    );
   },
 };
 
@@ -160,7 +190,43 @@ const RANDOM_LOREM_IPSUM = () => {
   return result;
 };
 
-// GENERATE_PRODUCT_CARD_MARKUP ->
+const GNRT_ACCORD_MARKUP = (data, idx) => {
+  const { question, description, points: pointsObj } = data;
+  const pointsCollection = [];
+  let points = [];
+
+  for (let i in pointsObj) {
+    pointsCollection.push(pointsObj[i]);
+    points = pointsCollection;
+  }
+
+  const markup = `
+        <article class="accord" data-accord="${idx + 1}" >
+          <header>
+            <div>
+              <span>
+                <ion-icon name="infinite-outline" class="icon"></ion-icon>
+              </span>
+              <h6>${question}</h6>
+            </div>
+
+            <span>
+              <ion-icon name="caret-down-outline" class="icon"></ion-icon>
+            </span>
+          </header>
+
+          <div class="accord__body">
+            <p>${description}</p>
+
+            <ul>
+              ${points.map((point) => `<li>${point}</li>`).join("")}
+            </ul>
+          </div>
+        </article>`;
+
+  return markup;
+};
+
 const GNRT_MAIN_PRC_MARKUP = (data) => {
   const { id, category, title, total, description, image } = data;
 
@@ -213,16 +279,18 @@ const GNRT_CART_PRC_MARKUP = (data) => {
       <div class="cart--prc__quantity">
 
       
-        <button id="incrementQuantityOfPrc">
+        <button class="increment--product__quantity">
           <ion-icon class="icon" name="chevron-up-outline"></ion-icon>
         </button>
         <input class="prc--quantity__input" type="number" min="0" max="6" value="1"/>
-        <button id="decrementQuantityOfPrc">
+        <button class="decrement--product__quantity">
           <ion-icon class="icon" name="chevron-down-outline"></ion-icon>
         </button>
         </div>
 
-      <div></div>
+        <button class="remove--cart-product__btn">
+          <ion-icon class="icon" name="close-circle-outline"></ion-icon>
+        </button>
     </figure>
   `;
 };
@@ -242,4 +310,5 @@ export {
   RANDOM_DISCOUNT,
   CLASS_LIST_METHODS,
   MANAGE_CLASS_LIST,
+  GNRT_ACCORD_MARKUP,
 };

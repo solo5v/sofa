@@ -11,7 +11,7 @@
   grid-template-columns: auto 1fr auto;
 
   align-items: center;
-
+  position: relative;
   border-radius: $rounded-sm;
   overflow: hidden;
 
@@ -86,6 +86,21 @@
       &:hover {
         opacity: 1;
       }
+    }
+  }
+
+  .remove--cart-product__btn {
+    position: absolute;
+    background: #9909098a;
+    width: fit-content;
+    height: fit-content;
+    top: 0;
+    right: 0;
+    padding-top: 3px;
+    border-radius: 4px;
+
+    .icon {
+      color: #ffe3e3;
     }
   }
 }
@@ -285,7 +300,7 @@
 
   figure {
     &.cta--sofa__color {
-      background-color: $clr-teal-100;
+      // background-color: $clr-teal-100;
       // background-color: #e9edc9;
     }
 
@@ -305,7 +320,7 @@
     }
 
     &.cta--desktopchairs__color {
-      background-color: $clr-yellow-300;
+      // background-color: $clr-yellow-300;
       background-color: #fcd5ce;
     }
   }

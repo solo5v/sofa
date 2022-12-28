@@ -1,15 +1,12 @@
 import {
-  manageClassList,
   GNRT_MAIN_PRC_MARKUP,
+  manageClassList,
+  DEMO_GNRT,
   GET_USER_INFO,
   SET_USER_INFO,
-  GNRT_CART_PRC_MARKUP,
-} from "../helpers.js";
-
-// import { generateCartProduct } from "../Basket.js";
-import { PRODUCTS } from "../controller/data.js";
-import { REGISTER_MODAL } from "./RegisterModal.js";
-import { GENERATE_BASKET_PRODCUTS, DEMO_GNRT } from "../Basket.js";
+  PRODUCTS,
+  REGISTER_MODAL,
+} from "../controller/controller.js";
 
 // DISPLAY-PRODUCTS
 

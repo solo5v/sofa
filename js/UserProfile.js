@@ -1,47 +1,53 @@
-import { manageClassList, GET_USER_INFO, SET_USER_INFO } from "./helpers.js";
-import { STATE } from "./controller/data.js";
-
-const USER_PROFILE_BTN = document.querySelector("#userProfileBtn");
-const USER_PROFILE_TOOLTIP = document.querySelector("#userProfile");
-
-const USER_LOGIN_OPTIONS = document.querySelector("#userLoginOptions");
-
-const USER_LOGIN_BTNS = document.querySelector(".login__btn ");
-
-const USER_PROFILE_HANDLER = function () {
-  const deleteAccountBtn = document.querySelector("#deleteAccountBtn");
-  const logoutAccountBtn = document.querySelector("#logoutAccountBtn");
-
-  const tooltipHandler = () =>
-    manageClassList("toggle", "active", USER_PROFILE_TOOLTIP);
-
-  const logoutHandler = () => {
-    const USER = GET_USER_INFO("userInfo");
-    if (USER) {
-      USER.isLoggedIn = false;
-      SET_USER_INFO(USER);
-
-      if (USER.isLoggedIn === false) {
-        manageClassList("remove", "active", USER_PROFILE_TOOLTIP);
-        manageClassList("remove", "hidden", USER_LOGIN_BTNS);
-        manageClassList("remove", "active", USER_LOGIN_OPTIONS);
-        manageClassList("add", "hidden", USER_LOGIN_OPTIONS);
-      }
-    }
-  };
-
-  const deleteAccountHandler = () => {
-    localStorage.clear();
-
-    manageClassList("remove", "hidden", USER_LOGIN_BTNS);
-    manageClassList("remove", "active", USER_LOGIN_OPTIONS);
-    manageClassList("add", "hidden", USER_LOGIN_OPTIONS);
-  };
-
-  ///=====================
-  USER_PROFILE_BTN.addEventListener("click", tooltipHandler);
-  logoutAccountBtn.addEventListener("click", logoutHandler);
-  deleteAccountBtn.addEventListener("click", deleteAccountHandler);
+import {
+  GET_USER_INFO,
+  SET_USER_INFO,
+  MANAGE_CLASS_LIST,
+  USER_TYPE_OPTIONS_UI,
+} from "./controller/controller.js";
+const BTNS = {
+  profileTooltip: document.querySelector("#userProfile"),
+  userProfile: document.querySelector("#userProfileBtn"),
+  deleteAccount: document.querySelector("#deleteAccountBtn"),
+  logoutAccount: document.querySelector("#logoutAccountBtn"),
 };
 
-USER_PROFILE_HANDLER();
+const PROFILE = {
+  tooltipHandler: () => {
+    const { profileTooltip } = BTNS;
+    return MANAGE_CLASS_LIST.toggle(["active", profileTooltip]);
+  },
+
+  logoutHandler: () => {
+    const { profileTooltip } = BTNS;
+    const { check, moreThanOneAddOrRemove } = MANAGE_CLASS_LIST;
+    let user = GET_USER_INFO("userInfo");
+    if (!user) return;
+    const isActive = check("active", profileTooltip);
+
+    setTimeout(() => {
+      user.isLoggedIn = false;
+      SET_USER_INFO(user);
+      moreThanOneAddOrRemove(isActive, ["active", profileTooltip]);
+      USER_TYPE_OPTIONS_UI(user.isLoggedIn);
+    }, 2000);
+  },
+
+  deleteHandler: () => {
+    setTimeout(() => {
+      localStorage.clear();
+      USER_TYPE_OPTIONS_UI(false);
+    }, 2000);
+  },
+};
+
+const USER_PROFILE_HANDLER = function () {
+  const { deleteAccount, logoutAccount, userProfile } = BTNS;
+  const { logoutHandler, deleteHandler, tooltipHandler } = PROFILE;
+
+  ///=====================
+  userProfile.addEventListener("click", tooltipHandler);
+  logoutAccount.addEventListener("click", logoutHandler);
+  deleteAccount.addEventListener("click", deleteHandler);
+};
+
+export { USER_PROFILE_HANDLER };

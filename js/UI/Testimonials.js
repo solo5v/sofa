@@ -1,5 +1,4 @@
-import { manageClassList } from "../helpers.js";
-import { TESTIMOILAS } from "../controller/data.js";
+import { TESTIMOILAS, manageClassList } from "../controller/controller.js";
 
 const SLIDER = document.querySelector(".testimonials__section .slider");
 const DOTS_MOVEMENTS = document.querySelector(".slider--dots__movement ul");

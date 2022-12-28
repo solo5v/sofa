@@ -1,93 +1,119 @@
-import { manageClassList, SET_USER_INFO, GET_USER_INFO } from "./helpers.js";
-import { STATE } from "./controller/data.js";
-import { REGISTER_MODAL, REGISTER_TYPE_UI } from "./UI/RegisterModal.js";
+import {
+  STATE,
+  TOAST,
+  REGISTER_MODAL,
+  REGISTER_TYPE_UI,
+  SET_USER_INFO,
+  GET_USER_INFO,
+  MANAGE_CLASS_LIST,
+} from "./controller/controller.js";
 
-const USER_LOCG = GET_USER_INFO("userInfo")?.isLoggedIn;
-const USER = STATE.user;
-
-// FORM-EL
-const REGISTER_FORM = document.querySelector("#registerForm");
-const USER_INPUTS = {
-  username: document.querySelector("#username"),
-  email: document.querySelector("#email"),
-  password: document.querySelector("#password"),
-  checkbox: document.querySelector("#checkbox"),
-};
-
-// USER-TYPE-UI
 const USER_TYPE_OPTIONS_UI = (isLoggedIn) => {
   const MAIN_NAV = document.querySelector(".hd--main__nav");
   const USER_LOGIN_BTNS = document.querySelector(".login__btn ");
   const USER_LOGIN_OPTIONS = document.querySelector("#userLoginOptions");
+  const { moreThanOneAddOrRemove } = MANAGE_CLASS_LIST;
 
-  if (isLoggedIn) {
-    manageClassList("add", "cnt", MAIN_NAV);
-    manageClassList("add", "hidden", USER_LOGIN_BTNS);
-    manageClassList("add", "active", USER_LOGIN_OPTIONS);
-    manageClassList("remove", "hidden", USER_LOGIN_OPTIONS);
-  }
+  moreThanOneAddOrRemove(
+    isLoggedIn,
+    ["cnt", MAIN_NAV],
+    ["hidden", USER_LOGIN_BTNS],
+    ["active", USER_LOGIN_OPTIONS]
+  );
 };
 
-/* HANDLER-FORM-FUNCTIONLITY*/
-const signupHandler = function ({ username, email, password, checkbox }) {
+const signupHandler = function (inputs, user) {
   // THE PARAM IS THE USER INPUTS
+  // user is from state NOT localSTG
+  const { username, email, password, checkbox } = inputs;
 
   const isValid =
     username.value && email.value && password.value && checkbox.checked;
 
   if (isValid) {
-    USER.email = email.value.trim();
-    USER.name = username.value.trim();
-    USER.password = password.value.trim();
+    user.email = email.value.trim();
+    user.name = username.value.trim();
+    user.password = password.value.trim();
 
     setTimeout(() => {
       username.value = "";
-      USER.userIsValid = true;
-      SET_USER_INFO(USER);
+      user.userIsValid = true;
+      user.registerMode = "login";
+
+      SET_USER_INFO(user);
       REGISTER_TYPE_UI("login");
     }, 3000);
-  } else alert("Complete Your Form 😀");
+    //
+  } else TOAST("warraing", "Complete Your Form!! 😀");
 };
 
-const loginHandler = function ({ email, password }) {
+const loginHandler = function (inputs, user) {
   // THE PARAM IS THE USER INPUTS
+  const { email, password } = inputs;
 
-  const user = GET_USER_INFO("userInfo");
+  if (user == null || user == undefined) {
+    TOAST(
+      "alert",
+      "Your email is not found,  First Time? Let's Create An Account!"
+    );
+    throw new Error("Check User");
+  }
 
   const isValid =
-    user && user.userIsValid && email.value !== "" && password.value !== "";
-  email.value === user.email && password.value === user.password;
+    user &&
+    user.userIsValid &&
+    user.registerMode === "login" &&
+    email.value !== "" &&
+    password.value !== "" &&
+    email.value === user.email &&
+    password.value === user.password;
 
   //====================
-
   if (isValid) {
     setTimeout(() => {
       email.value = "";
       password.value = "";
-      user.isLoggedIn = USER.isLoggedIn = true;
+      user.isLoggedIn = user.isLoggedIn = true;
 
       SET_USER_INFO(user);
-      USER_TYPE_OPTIONS_UI(USER.isLoggedIn);
+      USER_TYPE_OPTIONS_UI(user.isLoggedIn);
+      REGISTER_MODAL.close();
     }, 3000);
-    REGISTER_MODAL.close();
-  } else {
-    alert("please check you information");
-  }
+
+    //
+  } else TOAST("warraing", "Please Check Your Information ...!! 😀");
 };
 
-const formSubmitionHandler = function (e) {
-  e.preventDefault();
+const REGISTER_FORM_HANDLER = () => {
+  const REGISTER_FORM = document.querySelector("#registerForm");
+  const USER_INPUTS = {
+    username: document.querySelector("#username"),
+    email: document.querySelector("#email"),
+    password: document.querySelector("#password"),
+    checkbox: document.querySelector("#checkbox"),
+  };
+  const isLoggedIn = GET_USER_INFO("userInfo")?.isLoggedIn;
 
-  switch (STATE.registerMode) {
-    case "signup":
-      return signupHandler(USER_INPUTS);
+  const formSubmitionHandler = function (e) {
+    try {
+      e.preventDefault();
+      const user = GET_USER_INFO("userInfo");
+      const USER = STATE.user;
 
-    case "login":
-      return loginHandler(USER_INPUTS);
-  }
+      switch (STATE.registerMode) {
+        case "signup":
+          return signupHandler(USER_INPUTS, USER);
+
+        case "login":
+          return loginHandler(USER_INPUTS, user);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (isLoggedIn) USER_TYPE_OPTIONS_UI(isLoggedIn);
+  return REGISTER_FORM.addEventListener("submit", formSubmitionHandler);
 };
 
-if (USER_LOCG) {
-  USER_TYPE_OPTIONS_UI(USER_LOCG);
-}
-REGISTER_FORM.addEventListener("submit", formSubmitionHandler);
+export { REGISTER_FORM_HANDLER, USER_TYPE_OPTIONS_UI };

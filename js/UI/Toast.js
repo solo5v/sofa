@@ -1,7 +1,9 @@
 export default function TOAST(type, msg) {
+  const iconName = type == "warraing" ? "warning" : `${type}-circle`;
+
   const markup = `<div class="toast__alert">
     <span>
-    <ion-icon class="icon" name="${type}-circle-outline"></ion-icon>
+    <ion-icon class="icon" name="${iconName}-outline"></ion-icon>
     </span>
     <span>${msg}</span>
     </div>`;

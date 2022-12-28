@@ -1,23 +1,16 @@
-import "./data.js";
-import { GENERATE_PRODUCTS_UI, addToCartHandler } from "../UI/Products.js";
-import "../UI/Accordion.js";
-import "../UI/RegisterModal.js";
-import "../Register.js";
 import {
-  GENERATE_BASKET_PRODCUTS,
-  SIDE_HANDLER_UI,
-  DEMO_GNRT,
-} from "../Basket.js";
-import "../UserProfile.js";
-import "../UI/Testimonials.js";
-
-import {
-  GET_USER_INFO,
-  GNRT_CART_PRC_MARKUP,
-  manageClassList,
-  SET_USER_INFO,
   MANAGE_CLASS_LIST,
-} from "../helpers.js";
+  USER_PROFILE_HANDLER,
+  GENERATE_PRODUCTS_UI,
+  addToCartHandler,
+  ACCORDION_UI_HANDLER,
+  GNRT_ACCORDION_UI,
+  SIDE_HANDLER_UI,
+  REGISTER_FORM_HANDLER,
+  REGISTER_MODAL_UI,
+  PRODUCTS_QUANTITY,
+  Testimonials,
+} from "./controller.js";
 
 const HEADER = document.querySelector(".header");
 const MAIN_NAV = document.querySelector("#mainNav");
@@ -102,15 +95,20 @@ function APP_UI_INIT() {
   HEADER_UI_HANDLER();
   MENU_UI_HANDLER();
   SIDE_HANDLER_UI();
+  REGISTER_MODAL_UI();
   GENERATE_PRODUCTS_UI();
+  GNRT_ACCORDION_UI();
 }
 
 function init() {
   APP_UI_INIT();
+  REGISTER_FORM_HANDLER();
+  USER_PROFILE_HANDLER();
   SEARCH_ENG_UI_HANDLER();
+  ACCORDION_UI_HANDLER();
   addToCartHandler();
+
+  PRODUCTS_QUANTITY();
 }
 
 init();
-
-// export { manageClassList, HEADER };

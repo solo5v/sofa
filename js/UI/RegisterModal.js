@@ -1,100 +1,111 @@
-import { STATE } from "../controller/data.js";
-import { manageClassList } from "../helpers.js";
+import { STATE, MANAGE_CLASS_LIST } from "../controller/controller.js";
 
-const MODAL = document.querySelector("#registerModal");
-const MODAL_BTNS = {
-  register: document.querySelector("#registerBtn"),
-  login: document.querySelector("#loginRgsBtn"),
-  signup: document.querySelector("#signRgsBtn"),
-  closeModal: document.querySelector("#closeModalBtn"),
-};
-
-// ==========================
-// MODAL-OBJ
-
-const REGISTER_MODAL = {
-  // ELEMNETS
-  modal: MODAL,
+const MODAL = {
+  modal: document.querySelector("#registerModal"),
   header: document.querySelector(".header"),
   menuBtn: document.querySelector("#menuBtn"),
-  closeBtn: document.querySelector("#closeModalBtn"),
+  loginBtn: document.querySelector("#loginRgsBtn"),
+  signupBtn: document.querySelector("#signRgsBtn"),
+  asideLogin: document.querySelector(".rgs--aside__login"),
+  asideSignup: document.querySelector(".rgs--aside__signup"),
+  registerBtn: document.querySelector("#registerBtn"),
+  closeModalBtn: document.querySelector("#closeModalBtn"),
+};
 
+const REGISTER_MODAL = {
   // METHOD
   show() {
-    const navIsOpen = manageClassList(
-      "contains",
-      "open__nav",
-      REGISTER_MODAL.header
-    );
+    const { header, modal } = MODAL;
+    const navIsOpen = MANAGE_CLASS_LIST.check("open__nav", header);
 
-    manageClassList("remove", "hidden", REGISTER_MODAL.modal);
-    // the hidden class kill the animation
+    MANAGE_CLASS_LIST.oneForMulti("remove", "hidden", modal);
     setTimeout(() => {
-      manageClassList("add", "active", REGISTER_MODAL.modal);
-      REGISTER_MODAL.modal.showModal();
+      // the hidden class kill the animation
+      MANAGE_CLASS_LIST.oneForMulti("add", "active", modal);
+
+      modal.showModal();
     }, 0.1);
 
     // CLOSE THE NAV IF THE MODAL NEED TO DISPLAY
-    if (navIsOpen) {
-      manageClassList("remove", "active", REGISTER_MODAL.menuBtn);
-      manageClassList("remove", "open__nav", REGISTER_MODAL.header);
-    }
+    MANAGE_CLASS_LIST.moreThanOneAddOrRemove(
+      navIsOpen,
+      ["active", modal],
+      ["open__nav", header]
+    );
   },
 
   close() {
-    const modal = REGISTER_MODAL.modal;
+    const { modal } = MODAL;
+    const { oneForMulti, diffrMethodAndClass } = MANAGE_CLASS_LIST;
 
-    const handler = () => {
-      REGISTER_MODAL.modal.close();
-      manageClassList("add", "hidden", modal);
-      manageClassList("remove", "active", modal);
-    };
+    oneForMulti("remove", "active", modal);
+    setTimeout(() => {
+      // the hidden class kill the animation
+      modal.close();
+      oneForMulti("add", "hidden", modal);
 
-    // TRUE || FALSE
-    const keyIsEscape = (e) =>
-      e.key == "Escape" && manageClassList("contains", "active", modal);
-
-    // Escape-Btn-Hadnler
-    window.addEventListener("keydown", (e) => keyIsEscape(e) && handler());
-
-    // Close-Btn-Handler
-    REGISTER_MODAL.closeBtn.addEventListener("click", handler);
+      // KILL THE ENIMATE
+      // diffrMethodAndClass(modal, ["add", "hidden"], ["remove", "active"]);
+    }, 0.2);
   },
 };
 
-// REGISTER_MODAL.close(); // DEFAULT-UI;
-MODAL_BTNS.register.addEventListener("click", REGISTER_MODAL.show);
-
-// ==========================
-// REGISTER_TYPE
-
 const REGISTER_TYPE_UI = function (mode) {
-  const ASITDE_LOGIN = document.querySelector(".rgs--aside__login");
-  const ASITDE_SIGINUP = document.querySelector(".rgs--aside__signup");
+  const { asideLogin, asideSignup, modal } = MODAL;
+  const { allDiffr, diffrMethodAndClass } = MANAGE_CLASS_LIST;
+
   switch (mode) {
     case "signup":
       STATE.registerMode = "signup";
-      manageClassList("remove", "active", ASITDE_LOGIN);
-      manageClassList("add", "active", ASITDE_SIGINUP);
-      manageClassList("remove", "login__type", MODAL);
-      manageClassList("add", "signup__type", MODAL);
+
+      allDiffr(
+        ["remove", "active", asideLogin],
+        ["add", "active", asideSignup]
+      );
+      diffrMethodAndClass(
+        modal,
+        ["remove", "login__type"],
+        ["add", "signup__type"]
+      );
       break;
 
     case "login":
       STATE.registerMode = "login";
-      manageClassList("add", "active", ASITDE_LOGIN);
-      manageClassList("remove", "active", ASITDE_SIGINUP);
-      manageClassList("add", "login__type", MODAL);
-      manageClassList("remove", "signup__type", MODAL);
+      allDiffr(
+        ["add", "active", asideLogin],
+        ["remove", "active", asideSignup]
+      );
 
+      diffrMethodAndClass(
+        modal,
+        ["add", "login__type"],
+        ["remove", "signup__type"]
+      );
       break;
   }
 };
 
-// DEFAULT UI
-REGISTER_TYPE_UI("signup");
+const REGISTER_MODAL_UI = () => {
+  const { registerBtn, closeModalBtn, signupBtn, loginBtn, modal } = MODAL;
+  const { show, close } = REGISTER_MODAL;
+  const { check } = MANAGE_CLASS_LIST;
 
-MODAL_BTNS.signup.addEventListener("click", () => REGISTER_TYPE_UI("signup"));
-MODAL_BTNS.login.addEventListener("click", () => REGISTER_TYPE_UI("login"));
+  // DEFAULT UI
+  close();
+  REGISTER_TYPE_UI("signup");
 
-export { REGISTER_MODAL, REGISTER_TYPE_UI };
+  // Escape BTN
+  const keyIsValid = (e) => {
+    return e.key == "Escape" && check("active", modal);
+  };
+
+  //==============
+  //__HANDLER
+  registerBtn.addEventListener("click", show);
+  closeModalBtn.addEventListener("click", close);
+  window.addEventListener("keydown", (e) => keyIsValid(e) && close());
+  loginBtn.addEventListener("click", () => REGISTER_TYPE_UI("login"));
+  signupBtn.addEventListener("click", () => REGISTER_TYPE_UI("signup"));
+};
+
+export { REGISTER_MODAL, REGISTER_TYPE_UI, REGISTER_MODAL_UI };

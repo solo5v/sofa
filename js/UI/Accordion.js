@@ -1,81 +1,43 @@
-import { FAQ } from "../controller/data.js";
-import { manageClassList } from "../helpers.js";
+import {
+  FAQ,
+  MANAGE_CLASS_LIST,
+  GNRT_ACCORD_MARKUP,
+} from "../controller/controller.js";
 
-// // 1. DISPLAY-DATA
-
-const generateAccordMarkup = function (data, idx) {
-  const { question, description, points } = data;
-  const markup = `
-  <article class="accord" data-accord="${idx + 1}" >
-                  <header>
-                    <div>
-                      <span>
-                        <ion-icon name="infinite-outline" class="icon"></ion-icon>
-                      </span>
-                      <h6>${question}</h6>
-                    </div>
-
-                    <span>
-                      <ion-icon name="caret-down-outline" class="icon"></ion-icon>
-                    </span>
-                  </header>
-
-                  <div class="accord__body">
-                    <p>${description}</p>
-
-                    <ul>
-                      <li>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      </li>
-                      <li>
-                        Quasi accusamus corporis totam tempora suscipit ab
-                        obcaecati.
-                      </li>
-                      <li>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      </li>
-                      <li>
-                        Quasi accusamus corporis totam tempora suscipit ab
-                        obcaecati.
-                      </li>
-                    </ul>
-                  </div>
-                </article>`;
-
-  return markup;
-};
-
-const displayAccord = function () {
+const GNRT_ACCORDION_UI = () => {
   const parentEl = document.querySelector("#accordion");
 
   FAQ.map((accordData, idx) => {
-    const accordMarkup = generateAccordMarkup(accordData, idx);
+    const accordMarkup = GNRT_ACCORD_MARKUP(accordData, idx);
     parentEl.insertAdjacentHTML("beforeend", accordMarkup);
   });
 };
 
-displayAccord();
-
-// 2. ACCORD-BEHAVIOR-btnHandler
-
-const accordHeaders = document.querySelectorAll(".accord header");
-
-accordHeaders.forEach((hd, idx) => {
-  hd.addEventListener("click", (e) => {
-    const accord = e.target.closest("article");
-
-    manageClassList("toggle", "active", accord);
-
-    removeOpen(idx);
-  });
-});
-
-function removeOpen(idx) {
+const removeOpen = (idx) => {
   const accords = document.querySelectorAll(".accord");
+  const { oneForMulti } = MANAGE_CLASS_LIST;
 
-  accords.forEach((acc, idx2) => {
-    if (idx != idx2) {
-      acc.classList.remove("active");
-    }
+  accords.forEach((accord, idx2) => {
+    if (idx != idx2) oneForMulti("remove", "active", accord);
   });
-}
+};
+
+const ACCORDION_UI_HANDLER = () => {
+  const accordHeaders = document.querySelectorAll(".accord header");
+
+  const headerHandler = (hd, idx) => {
+    const handler = (e) => {
+      const { oneForMulti } = MANAGE_CLASS_LIST;
+      const accord = e.target.closest("article");
+
+      oneForMulti("toggle", "active", accord);
+      removeOpen(idx);
+    };
+
+    hd.addEventListener("click", handler);
+  };
+
+  return accordHeaders.forEach(headerHandler);
+};
+
+export { GNRT_ACCORDION_UI, ACCORDION_UI_HANDLER };

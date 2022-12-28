@@ -4,7 +4,7 @@ import {
   RANDOM_LOREM_IPSUM,
   RANDOM_PRICE,
   RANDOM_SHIPMENT_PRICE,
-} from "../helpers.js";
+} from "./helpers.js";
 
 const STATE = {
   registerMode: "signup",
@@ -16,6 +16,7 @@ const STATE = {
     userProducts: [],
     userIsValid: false,
     isLoggedIn: false,
+    registerMode: "signup",
   },
 };
 
