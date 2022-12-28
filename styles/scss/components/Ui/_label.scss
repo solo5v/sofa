@@ -1,0 +1,23 @@
+@use "../../helpers/var" as *;
+@use "../../helpers/placeholders";
+
+%label_category {
+  font-weight: $fw-bold;
+  text-transform: uppercase;
+  font-size: 1rem;
+  display: inline-block;
+
+  border-radius: $rounded-full;
+  transform: scale(0.9);
+  color: #fff;
+  background-color: #089a6e7c;
+
+  padding: 4px {
+    right: 7px;
+  }
+
+  .icon {
+    font-size: 0.8rem;
+    color: $clr-main;
+  }
+}

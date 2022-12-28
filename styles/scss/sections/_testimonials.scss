@@ -1,0 +1,147 @@
+@use "../helpers/var" as *;
+@use "../helpers/placeholders";
+@use "../components/Ui/overlay";
+@use "../components/Ui/btn";
+
+.testimonials__section {
+  @extend %fx_cnt_rows;
+
+  height: 100vh;
+
+  min-height: 700px;
+  background: linear-gradient(140deg, #00e699, #076a4c);
+
+  img {
+    width: 250px;
+  }
+
+  .container {
+    position: relative;
+    width: 100%;
+
+    overflow: hidden;
+    .slider__btn {
+      @extend %slider_btn;
+    }
+  }
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+
+  flex-direction: column;
+
+  position: relative;
+  background-color: #f3f3f3;
+
+  width: 92vw;
+  height: 35rem;
+  max-width: 100rem;
+
+  margin-left: auto;
+
+  border-radius: $rounded-md;
+}
+
+.tsmon {
+  @extend %kill_element_ui;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+
+  position: absolute;
+  transition: all 0.5s ease-in-out;
+
+  .tsmon__img {
+    width: 23rem;
+    height: 30rem;
+
+    position: relative;
+    transform: translateX(-40%);
+
+    overflow: hidden;
+    border-radius: $rounded-semi--sm;
+
+    box-shadow: -1.5rem -1.5rem 1.5rem rgba(255, 255, 255, 0.096),
+      1.5rem 1.5rem 1.5rem rgba(0, 0, 0, 0.212);
+
+    img {
+      @extend %img_full_cover;
+    }
+
+    &::after {
+      @extend %testimonials_img_overlay;
+    }
+  }
+
+  figcaption {
+    width: 75%;
+
+    margin-left: -5%;
+    transition: all 0.5s ease-in-out;
+
+    h5 {
+      font-style: italic;
+      margin-bottom: 0.9rem;
+    }
+
+    blockquote {
+      width: 90%;
+
+      line-height: 1.4;
+      letter-spacing: 0.2px;
+
+      margin: {
+        left: 10px;
+        bottom: 2.4rem;
+      }
+      color: #02261bd9;
+    }
+
+    strong {
+      color: #087f5bc9;
+
+      font-weight: 600;
+      font-size: $fz-nr-semi--sm;
+    }
+  }
+}
+
+.tsmon.active {
+  @extend %re_evaluate_element_ui;
+  transform: scale(1);
+}
+
+.slider--dots__movement {
+  position: absolute;
+  right: 15px;
+  top: 40%;
+  z-index: 1;
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: $gap-semi--sm;
+
+    li {
+      width: 10px;
+      height: 10px;
+      cursor: pointer;
+
+      transition: $trn-sm ease-in-out;
+      border-radius: $rounded-full;
+      background-color: $clr-gray-400;
+      &.active {
+        width: 7.5px;
+        height: 20px;
+        background-color: $clr-main;
+      }
+    }
+  }
+}

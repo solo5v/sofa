@@ -1,0 +1,120 @@
+@use "../../helpers/var" as *;
+@use "../../helpers/placeholders";
+
+%main_btn {
+  @extend %fx_cnt_rows;
+
+  gap: 8px;
+  padding: 5px 15px;
+
+  font-size: $fz-nr-md;
+  font-weight: $fw-bold;
+
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+  transition: $trn-sm;
+  border-radius: $rounded-full;
+
+  color: $clr-main-100;
+  background: $main-btn--gradient !important;
+}
+
+.main__btn.link:link,
+.main__btn.link:visited {
+  @extend %main_btn;
+
+  &:hover,
+  &:active {
+    transform: translateX(10px);
+
+    box-shadow: 3px 0px 20px $clr-main-600;
+  }
+}
+
+.main__btn.btn {
+  @extend %main_btn;
+
+  background-color: inherit;
+}
+
+%user_profile_btn {
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+  background-color: inherit;
+
+  span {
+    @extend %fx_cnt_rows, %p_rl;
+
+    .icon:nth-child(2) {
+      position: absolute;
+      right: -13px;
+      bottom: -1px;
+      font-size: 1.4rem;
+    }
+  }
+}
+//=====================
+// PRODUCT CARD OVERLAY
+
+%prc_overlay_btn {
+  width: 47%;
+  border-radius: 0;
+  background-color: transparent;
+  padding: 8px 0;
+
+  cursor: pointer;
+  color: $clr-main-100;
+
+  font-size: 1rem;
+  font-weight: $fw-xl--bold;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+
+  border: none;
+  border-bottom: 2px solid #00000000;
+  border-top-right-radius: 4px;
+
+  &.active {
+    border-color: $clr-main;
+
+    backdrop-filter: blur(5px);
+    background-color: #ffffff0f;
+  }
+}
+
+//=====================
+
+%slider_btn {
+  width: 30px;
+  height: auto;
+  background: inherit;
+
+  position: absolute;
+  right: 14%;
+  bottom: 8%;
+
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  z-index: 1;
+
+  animation: slideIcon 0.7s linear infinite alternate;
+
+  img {
+    @extend %img_full_contain;
+  }
+
+  @keyframes slideIcon {
+    to {
+      transform: translateY(7px);
+    }
+  }
+}

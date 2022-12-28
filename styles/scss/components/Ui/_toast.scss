@@ -1,0 +1,48 @@
+@use "../../helpers/var" as *;
+@use "../../helpers/placeholders";
+
+.toast__alert {
+  @extend %fx_cnt_rows, %p_fx, %kill_element_ui;
+
+  width: fit-content;
+  height: 32px;
+  gap: 0.5rem;
+  padding: 2px 13px;
+
+  left: 50%;
+  top: 3%;
+  z-index: 1000;
+  overflow: hidden;
+
+  border-radius: 9px;
+  background: #f3f3f395;
+
+  transition: $trn-sm ease-out;
+  backdrop-filter: blur(5px);
+  transform: translate(-50%, -5rem);
+
+  span:nth-child(1) {
+    margin-top: 5px;
+  }
+
+  &::before {
+    content: "";
+    width: 100%;
+
+    position: absolute;
+    height: 3px;
+    top: 0px;
+    background-color: red;
+  }
+
+  &.active {
+    @extend %re_evaluate_element_ui;
+
+    transform: translate(-50%, 0);
+
+    &::before {
+      transition: all 5s;
+      width: 0;
+    }
+  }
+}

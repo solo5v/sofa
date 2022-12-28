@@ -1,0 +1,40 @@
+@use "../../helpers/var" as *;
+@use "../../helpers/placeholders";
+
+%menu_icon {
+  @extend %kill_user_select;
+  cursor: pointer;
+  direction: rtl;
+
+  > span {
+    width: 34px;
+    height: 3px;
+    display: block;
+
+    transition: $trn-md;
+    border-radius: $rounded-full;
+    background-color: $clr-gray-200;
+
+    &:nth-child(1) {
+      margin-bottom: 6px;
+    }
+
+    &:nth-child(2) {
+      width: 24px;
+    }
+  }
+
+  &.active {
+    transform: scale(0.8) rotate(45deg);
+
+    span {
+      margin: 0;
+      height: 4.5px;
+
+      &:nth-child(2) {
+        transform: translateY(-4.5px) rotate(90deg);
+        width: 34px;
+      }
+    }
+  }
+}

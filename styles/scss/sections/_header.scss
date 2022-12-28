@@ -1,0 +1,168 @@
+@use "../helpers/var" as *;
+@use "../helpers/placeholders";
+@use "../components/main-nav";
+@use "../components/Ui/icon";
+@use "../components/Ui/btn";
+
+// layout
+.header {
+  @extend %fx_between, %kill_user_select;
+
+  width: 100%;
+  z-index: 100;
+  position: absolute;
+
+  a:link,
+  a:visited,
+  .icon {
+    color: $clr-gray-200;
+  }
+
+  font-weight: $fw-bold;
+  text-transform: uppercase;
+
+  height: 6.4rem;
+  margin: 0 auto;
+  padding: 0 4.8rem;
+
+  .hd--user__options {
+    transition: $trn-md;
+    position: relative;
+  }
+
+  .hd--logo__cols,
+  .hd--user__options,
+  .hd--login__options.active {
+    @extend %fx_between;
+    width: 5%;
+    gap: 20px;
+  }
+
+  .hd--user__profile {
+    button {
+      @extend %user_profile_btn;
+    }
+
+    .user--profile__tooltip {
+      @extend %fx_cnt_cols;
+      display: none;
+
+      width: 20rem;
+      padding: 5px;
+      gap: $gap-sm;
+
+      position: absolute;
+      top: 31px;
+      right: -11px;
+
+      border-radius: $rounded-sm;
+      background-color: #f3f3f3;
+
+      button {
+        width: 100%;
+        height: 20px;
+        transition: $trn-sm;
+
+        font-weight: $fw-bold;
+        color: #191919;
+        text-transform: capitalize;
+
+        &:hover {
+          color: $clr-main;
+        }
+
+        &:nth-child(2) {
+          @extend %main_btn;
+          font-size: $fz-nr-sm;
+          border-radius: $rounded-semi--sm;
+        }
+      }
+
+      &.active {
+        display: flex;
+      }
+    }
+  }
+}
+
+// if header open the nav
+.header.open__nav {
+  .hd--login__options {
+    transform: translateX(-3px);
+
+    .hd--search__engine {
+      transform: translate(0);
+    }
+  }
+}
+
+.login__btn {
+  position: absolute;
+  width: 10rem;
+  transform: translate(-45px, 0px);
+}
+
+.menu__icon {
+  @extend %menu_icon;
+
+  display: none;
+}
+
+body.sticky {
+  .header {
+    position: fixed;
+    backdrop-filter: blur(5px);
+    background: linear-gradient(-120deg, #ffffffae, #3333336f);
+  }
+}
+
+// ---------
+
+@media (max-width: $desktop-breakpoint) {
+  .header {
+    .hd--logo__cols,
+    .hd--user__options {
+      width: 6%;
+    }
+  }
+}
+
+@media (max-width: $tablet-lg--breakpoint) {
+  .header {
+    .hd--login__options,
+    .login__btn {
+      display: none;
+    }
+
+    // show search-bar & cart
+    &.open__nav {
+      .hd--login__options.active,
+      .login__btn {
+        transition: $trn-md 0.5;
+        display: flex;
+        flex-direction: column;
+
+        position: absolute;
+        top: 7rem;
+        right: 44px;
+        gap: $gap-nr;
+      }
+    }
+  }
+
+  .menu__icon {
+    display: block;
+  }
+}
+
+@media (max-width: $mobile-breakpoint) {
+  .header {
+    .hd--main__nav {
+      width: 100%;
+    }
+
+    &.open__nav .hd--login__options {
+      right: 30px;
+    }
+  }
+}
